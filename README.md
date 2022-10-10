@@ -1,16 +1,16 @@
 # Unsong Web Serial Scraper for Kindle
 
-I adapted a [Worm Web Serial scaper](https://github.com/rhelsing/worm_scraper) to make a ebook/kindle version of Unsong, by Scott Alexander. You can now enjoy Unsong without all of the eye strain!
+I adapted a [Worm Web Serial scaper](https://github.com/rhelsing/worm_scraper) to make a ebook/kindle version of [Mastering the Core Teachings of the Buddha, by Daniel M. Ingram](https://www.mctb.org/mctb2/title-page/). You can now enjoy Mastering the Core Teachings of the Buddha on an e-reader!
 
-![Unsong Header](http://i.imgur.com/d9LvKMc.png)
+![MCTB Cover](https://www.mctb.org/wp-content/uploads/2018/05/BookCover.jpg)
 
-## Download
+<!--## Download
 
 Download the ebook or run the scraper yourself.
 
-- [Generated .mobi](//jasongross.github.io/unsong_scraper/unsong.mobi)
-- [Generated .epub](//jasongross.github.io/unsong_scraper/unsong.epub)
-
+- [Generated .mobi](//jasongross.github.io/mctb_scraper/mctb.mobi)
+- [Generated .epub](//jasongross.github.io/mctb_scraper/mctb.epub)
+-->
 ## How to run:
 
 1. Clone this project
@@ -26,11 +26,11 @@ gem install parallel
 3. Run the script and output into html file
 
 ```command
-ruby unsong_scraper.rb > unsong.html
+ruby mctb_scraper.rb > mctb.html
 ```
 
 4. Convert (requires Calibre CLI)
 
 ```command
-ebook-convert unsong.html unsong.mobi --authors "Scott Alexander" --title "Unsong" --max-toc-links 500
+ebook-convert mctb.html mctb.mobi --authors "Daniel M. Ingram" --title "Mastering the Core Teachings of the Buddha" --max-toc-links 500
 ```

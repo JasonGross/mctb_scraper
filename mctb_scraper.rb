@@ -5,29 +5,30 @@ require 'open-uri'
 require 'uri'
 require 'parallel'
 
-toc_page = Nokogiri::HTML(open('http://unsongbook.com/')).css('.pjgm-postcontent')
+toc_page = Nokogiri::HTML(URI.open('https://www.mctb.org/mctb2/table-of-contents/')).css('.page-list')
 
 chapters = Parallel.map_with_index(toc_page.css('a'), :in_threads => 8) do |link, ind|
   index = ind - 1
   url = link['href']
-  next unless url =~ /\/prologue|\/epilogue|\/book|\/interlude|\/chapter/
   unless url.ascii_only?
     url = URI.escape(url)
   end
   if url.to_s.start_with?("//")
     url = "https:" + url
   end
-  doc = Nokogiri::HTML(open(url))
-  chapter_title = doc.css('h1.pjgm-posttitle').first
+  doc = Nokogiri::HTML(URI.open(url))
+  chapter_title = doc.css('div.headline h1').first
 
   #modify chapter to have link
   chapter_title_plain = chapter_title.content
   $stderr.puts chapter_title_plain
-  chapter_content = doc.css('div.pjgm-postcontent').first #gsub first p
+  chapter_content = doc.css('section.page-section').first
   #clean
-  chapter_content.search('.//div').remove
-  to_remove = doc.css('div.entry-content p').first #gsub first p
-  chapter_content = chapter_content.to_s.gsub(to_remove.to_s,"")
+  [chapter_content.css('div.sharedaddy').first,
+   chapter_content.css('div.sharedaddy ~ p').last].each do |to_remove|
+    chapter_content = chapter_content.to_s.gsub(to_remove.to_s,"")
+  end
+
   #write
   {"body" => "<h1 id=\"chap#{index.to_s}\">#{chapter_title_plain}</h1>" + chapter_content,
    "toc" => "<a href=\"#chap#{index.to_s}\">#{chapter_title_plain}</a><br>"}

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ruby unsong_scraper.rb > unsong.html || exit $?
-ebook-convert unsong.html unsong.mobi --authors "Scott Alexander" --title "Unsong" --max-toc-links 500 || exit $?
+ruby mctb_scraper.rb > mctb2.html || exit $?
+ebook-convert mctb2.html mctb2.mobi --authors "Daniel M. Ingram" --title "Mastering the Core Teachings of the Buddha" --max-toc-links 500 || exit $?
